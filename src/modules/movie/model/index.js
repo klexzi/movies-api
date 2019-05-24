@@ -11,7 +11,7 @@ export class Movie {
   }
 
   async list() {
-    const key = "listMovies";
+    const key = "/movies";
     return cache.get(key, async () => {
       let movieRecords;
       try {

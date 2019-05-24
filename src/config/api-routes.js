@@ -1,9 +1,11 @@
 import express from "express";
 import movieRoutes from "../modules/movie/route";
+import charactersRoutes from "../modules/characters/route";
 
 const apiRoutes = express.Router();
 
 apiRoutes.use("/movies", movieRoutes);
+apiRoutes.use("/characters", charactersRoutes);
 
 //invalid endpoint request
 apiRoutes.use((req, res) => {
