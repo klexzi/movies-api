@@ -14,7 +14,9 @@ export const getMovie = async (req, res) => {
         status: status.NOT_FOUND
       });
     }
-    return res.status(200).json({ result: movie, status: status.OK });
+    return res
+      .status(200)
+      .json({ error: null, result: movie, status: status.OK });
   } catch (error) {
     logger.error(error);
     return res.status(500).json({

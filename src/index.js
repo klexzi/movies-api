@@ -1,16 +1,15 @@
 import express from "express";
 import bodyParser from "body-parser";
 import compression from "compression";
-import dotenv from "dotenv";
 
 import { PORT } from "./config/secrets";
 import logger from "./config/logger";
 import apiRoutes from "./config/api-routes";
+import sequelize from "./config/database";
+import Comment from "./modules/comments/model/";
 
-dotenv.config();
 const app = express();
 
-app.set("port", PORT);
 app.use(compression());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -19,6 +18,15 @@ app.use(bodyParser.urlencoded({ extended: true }));
  * initialize all routes
  */
 app.use("/api", apiRoutes);
-app.listen(app.get("port"), () => {
-  logger.debug(`now listening on port ${app.get("port")}`);
-});
+sequelize
+  .authenticate()
+  .then(() => {
+    console.log("connected to db successfully");
+    Comment.sync({ force: true });
+    app.listen(PORT, () => {
+      logger.debug(`now listening on port ${PORT}`);
+    });
+  })
+  .catch(reason => {
+    console.log("could not connect to db because " + reason.message);
+  });

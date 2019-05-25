@@ -1,6 +1,10 @@
 import Joi from "joi";
 import status from "http-status";
 
+/**
+ *
+ * @param {object} queryParams
+ */
 const _validationSchema = queryParams => {
   const schema = {
     sortBy: Joi.string().valid(["name", "gender", "height"]),
