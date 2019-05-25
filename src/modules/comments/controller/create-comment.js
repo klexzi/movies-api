@@ -3,6 +3,7 @@ import status from "http-status";
 
 import logger from "../../../config/logger";
 import Comment from "../model/";
+import cache from "../../../config/cache";
 
 export const createComment = async (req, res) => {
   try {
@@ -13,6 +14,7 @@ export const createComment = async (req, res) => {
       ip: clientIp,
       mid
     });
+    cache.flush();
     return res.status(200).json({
       error: null,
       message: "comment",

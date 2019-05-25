@@ -2,10 +2,8 @@ import status from "http-status";
 
 import logger from "../../../config/logger";
 import Comment from "../model/";
-import Cache from "../../../config/cache";
+import cache from "../../../config/cache";
 
-const ttl = 10; // cache for 60 seconds
-const cache = new Cache(ttl);
 export const getComment = async (req, res) => {
   try {
     let comment = await cache.get(req.originalUrl, async () => {

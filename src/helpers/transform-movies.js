@@ -1,10 +1,13 @@
+import Comment from "../modules/comments/model/";
 /**
  *
  * @param {number} movieId
  * @private
  */
-const _countComments = movieId => {};
-
+const _countComments = async movieId => {
+  let commentCount = await Comment.count({ where: { mid: movieId } });
+  return commentCount;
+};
 /**
  *
  * @param {array} movies
@@ -23,10 +26,19 @@ const _sortByReleaseDate = movies => {
  */
 const _pickFields = movies => {
   if (Array.isArray(movies)) {
-    return movies.map(movie => {
+    let id = 1;
+    const promises = movies.map(async movie => {
       let { title, opening_crawl, release_date } = movie;
-      return { title, opening_crawl, release_date };
+      const commentsCount = await _countComments(id++);
+      return {
+        title,
+        opening_crawl,
+        release_date,
+        id: id++,
+        commentsCount
+      };
     });
+    return Promise.all(promises);
   } else {
     let { title, opening_crawl, release_date } = movies;
     return { title, opening_crawl, release_date };
@@ -50,13 +62,13 @@ const _formatResult = movies => {
  * @param {array} movies
  * @public
  */
-export const transformMovieData = movies => {
+export const transformMovieData = async movies => {
   let moviesResult = movies;
   if (Array.isArray(movies.results)) {
     moviesResult = _sortByReleaseDate(movies);
   }
 
-  moviesResult = _pickFields(moviesResult);
+  moviesResult = await _pickFields(moviesResult);
   moviesResult = _formatResult(moviesResult);
   return moviesResult;
 };

@@ -22,7 +22,7 @@ sequelize
   .authenticate()
   .then(() => {
     console.log("connected to db successfully");
-    Comment.sync({ force: true });
+    Comment.sync({ force: false });
     app.listen(PORT, () => {
       logger.debug(`now listening on port ${PORT}`);
     });

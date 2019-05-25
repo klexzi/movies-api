@@ -1,15 +1,12 @@
 import { fetch } from "../../../config/axios";
 import logger from "../../../config/logger";
 import { transformMovieData } from "../../../helpers/transform-movies";
-import Cache from "../../../config/cache";
+import cache from "../../../config/cache";
 
-const ttl = 60 * 60 * 1; // cache for 1 Hour
-const cache = new Cache(ttl); // Create a new cache service instance
 export class Movie {
   constructor(id) {
     this.id = id;
   }
-
   async list() {
     const key = "/movies";
     return cache.get(key, async () => {
@@ -22,8 +19,9 @@ export class Movie {
       }
 
       movieRecords = movieRecords.data;
-      movieRecords = transformMovieData(movieRecords);
+      movieRecords = await transformMovieData(movieRecords);
       logger.debug("movie records:", movieRecords);
+      console.log(movieRecords);
       return movieRecords;
     });
   }

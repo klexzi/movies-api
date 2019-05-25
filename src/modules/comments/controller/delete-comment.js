@@ -2,22 +2,17 @@ import status from "http-status";
 
 import Comment from "../model/";
 import logger from "../../../config/logger";
-import Cache from "../../../config/cache";
-
-const ttl = 0;
-const cache = new Cache(ttl);
+import cache from "../../../config/cache";
 
 export const deleteComment = async (req, res) => {
   try {
     const comment = await Comment.findOne({ where: { id: req.params.id } });
     if (!comment) {
-      return res
-        .status(404)
-        .json({
-          error: "not found",
-          message: "comment not found",
-          status: status.NOT_FOUND
-        });
+      return res.status(404).json({
+        error: "not found",
+        message: "comment not found",
+        status: status.NOT_FOUND
+      });
     }
     await comment.destroy();
     await cache.del(req.originalUrl);

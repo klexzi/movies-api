@@ -2,10 +2,7 @@ import status from "http-status";
 
 import { Character } from "../model";
 import logger from "../../../config/logger";
-import Cache from "../../../config/cache";
-
-const ttl = 60 * 60 * 1; // cache for 1 Hour
-const cache = new Cache(ttl); // Create a new cache service instance
+import cache from "../../../config/cache";
 
 export const listCharacters = async (req, res) => {
   try {

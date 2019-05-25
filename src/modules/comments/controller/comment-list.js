@@ -2,10 +2,7 @@ import status from "http-status";
 
 import Comment from "../model/";
 import logger from "../../../config/logger";
-import Cache from "../../../config/cache";
-
-const ttl = 60; // cache for 60 seconds
-const cache = new Cache(ttl);
+import cache from "../../../config/cache";
 
 export const commentList = async (req, res) => {
   try {
