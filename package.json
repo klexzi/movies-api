@@ -10,6 +10,9 @@
     "dev": "nodemon src/index.js --ext js,pug,css --exec babel-node",
     "test": ""
   },
+  "engines": {
+    "node": "11.6.0"
+  },
   "author": {
     "name": "Nwosu Kelechi",
     "email": "kelechinwosu@ymail.com"
@@ -30,6 +33,7 @@
     "mysql2": "^1.6.5",
     "node-cache": "^4.2.0",
     "request-ip": "^2.1.3",
+    "rimraf": "^2.6.3",
     "sequelize": "4.38.0",
     "winston": "^3.2.1"
   },
