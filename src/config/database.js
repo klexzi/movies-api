@@ -6,7 +6,6 @@ import {
   MYSQL_PASSWORD,
   ENV
 } from "./secrets";
-console.log(MYSQL_PASSWORD);
 const sequelize = new Sequelize(
   MYSQL_DATABASE,
   MYSQL_USERNAME,
