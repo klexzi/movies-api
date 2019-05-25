@@ -1,6 +1,7 @@
 # Movies API
 
 This is Star Wars Movie API sample for Paystack. it provides information of Star wars movies, characters and comments. This application provides A RESTful API of information which mostly was gotten from [swapi.co](https://swapi.co).
+Application URL is [https://movies-swapi.herokuapp.com/](https://movies-swapi.herokuapp.com/)
 
 ## Install
 
