@@ -4,7 +4,9 @@ import bodyParser from "body-parser";
 import compression from "compression";
 import helmet from "helmet";
 import cors from "cors";
+import methodOverride from "method-override";
 
+import { errorHandler } from "./middlewares/error-handler";
 import { PORT } from "./config/secrets";
 import logger from "./config/logger";
 import apiRoutes from "./config/api-routes";
@@ -15,10 +17,11 @@ const app = express();
 
 app.use(helmet());
 app.use(cors());
+app.use(methodOverride());
 app.use(compression());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-
+app.use(errorHandler());
 /**
  * initialize all routes
  */

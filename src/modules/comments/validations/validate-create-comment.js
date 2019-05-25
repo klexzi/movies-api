@@ -1,5 +1,6 @@
 import Joi from "joi";
-import status from "http-status";
+// import status from "http-status";
+import { ValidationError } from "../../../helpers/error-classes";
 /**
  *
  * @param {object} body
@@ -21,13 +22,7 @@ const _validationSchema = body => {
 export const validateCreateComment = (req, res, next) => {
   const { error } = _validationSchema(req.body);
   if (error) {
-    return res
-      .status(400)
-      .json({
-        error: "bad request",
-        message: error.details[0].message,
-        status: status.BAD_REQUEST
-      });
+    return next(new ValidationError(error));
   } else {
     return next();
   }
