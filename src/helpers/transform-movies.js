@@ -38,6 +38,7 @@ const _pickFields = movies => {
         commentsCount
       };
     });
+    // eslint-disable-next-line no-undef
     return Promise.all(promises);
   } else {
     let { title, opening_crawl, release_date } = movies;

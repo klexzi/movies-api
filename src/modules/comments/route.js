@@ -20,7 +20,7 @@ commentRoutes.get("/movie-comments/:id", validateParamsId, movieComments);
 commentRoutes.delete("/:id", validateParamsId, deleteComment);
 
 export default commentRoutes;
-commentRoutes.use((error, req, res, next) => {
+commentRoutes.use((error, req, res) => {
   logger.debug(error);
   return res.status(404).json({
     error: "endpoint not found",

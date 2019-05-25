@@ -1,6 +1,9 @@
+import "@babel/polyfill";
 import express from "express";
 import bodyParser from "body-parser";
 import compression from "compression";
+import helmet from "helmet";
+import cors from "cors";
 
 import { PORT } from "./config/secrets";
 import logger from "./config/logger";
@@ -10,6 +13,8 @@ import Comment from "./modules/comments/model/";
 
 const app = express();
 
+app.use(helmet());
+app.use(cors());
 app.use(compression());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -21,12 +26,12 @@ app.use("/api", apiRoutes);
 sequelize
   .authenticate()
   .then(() => {
-    console.log("connected to db successfully");
+    logger.debug("connected to db successfully");
     Comment.sync({ force: false });
     app.listen(PORT, () => {
       logger.debug(`now listening on port ${PORT}`);
     });
   })
   .catch(reason => {
-    console.log("could not connect to db because " + reason.message);
+    logger.debug("could not connect to db because " + reason.message);
   });

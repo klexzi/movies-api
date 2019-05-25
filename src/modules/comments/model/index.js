@@ -1,4 +1,4 @@
-import { Model, STRING, TEXT, INTEGER } from "sequelize";
+import { STRING, INTEGER } from "sequelize";
 
 import sequelize from "../../../config/database";
 const Comment = sequelize.define(

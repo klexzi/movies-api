@@ -6,7 +6,6 @@ import cache from "../../../config/cache";
 
 export const listCharacters = async (req, res) => {
   try {
-    // cache.flush();
     let character = new Character();
     let characterLists = cache.get(req.originalUrl, async () => {
       let characterData = await character.list();

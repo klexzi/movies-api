@@ -9,7 +9,7 @@ const movieRoutes = express.Router();
 movieRoutes.get("/", listMovies);
 movieRoutes.get("/:id", validateParamsId, getMovie);
 export default movieRoutes;
-movieRoutes.use((error, req, res, next) => {
+movieRoutes.use((error, req, res) => {
   logger.debug(error);
   return res.status(404).json({
     error: "not found",

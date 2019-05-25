@@ -1,5 +1,4 @@
 import Sequelize from "sequelize";
-
 import { MYSQL_DATABASE, MYSQL_USERNAME, MYSQL_PASSWORD, ENV } from "./secrets";
 const sequelize = new Sequelize(
   MYSQL_DATABASE,
@@ -8,7 +7,7 @@ const sequelize = new Sequelize(
   {
     host: "localhost",
     dialect: "mysql",
-    logging: ENV === "production" ? false : true
+    logging: ENV === "production" ? false : console.log
   }
 );
 

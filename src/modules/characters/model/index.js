@@ -7,7 +7,6 @@ export class Character {
   }
 
   async list() {
-    const key = "/characters";
     this.data = await fetch
       .get("people")
       .then(response => ({
