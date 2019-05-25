@@ -22,7 +22,7 @@ const _validationSchema = body => {
 export const validateCreateComment = (req, res, next) => {
   const { error } = _validationSchema(req.body);
   if (error) {
-    return next(new ValidationError(error));
+    return next(new ValidationError(error.details[0].message));
   } else {
     return next();
   }

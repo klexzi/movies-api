@@ -13,7 +13,8 @@ const sequelize = new Sequelize(
   {
     host: MYSQL_HOST,
     dialect: "mysql",
-    logging: ENV === "production" ? false : console.log
+    logging: ENV === "production" ? false : console.log,
+    operatorsAliases: false
   }
 );
 

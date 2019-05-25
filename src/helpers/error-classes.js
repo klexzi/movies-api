@@ -1,7 +1,11 @@
 import statusCode from "http-status";
 
-export class CustomError extends Error {
-  constructor(error, message, status) {
+/**
+ * @private
+ * extending default javascript error class
+ */
+export class _CustomError extends Error {
+  constructor(message, error, status) {
     super();
 
     Error.captureStackTrace(this, this.constructor);
@@ -14,23 +18,44 @@ export class CustomError extends Error {
   }
 }
 
-export class ValidationError extends CustomError {
-  constructor(error, message) {
-    console.log("hon", error);
+/**
+ * @public
+ * for query or body validation errors
+ */
+export class ValidationError extends _CustomError {
+  constructor(message, error) {
     super(
-      error || "bad request",
       message || "validation failed",
+      error || "bad request",
       statusCode.BAD_REQUEST
     );
   }
 }
 
-export class NotFoundError extends CustomError {
-  constructor(error, message) {
+/**
+ * @public
+ * for resource not found errors
+ */
+export class NotFoundError extends _CustomError {
+  constructor(message, error) {
     super(
-      error || "not found",
       message || "record not found",
+      error || "not found",
       statusCode.NOT_FOUND
+    );
+  }
+}
+
+/**
+ * @public
+ * for Application errors
+ */
+export class ApplicationError extends _CustomError {
+  constructor(message, error) {
+    super(
+      message || "something has gone wrong",
+      error || "internal server error",
+      statusCode.INTERNAL_SERVER_ERROR
     );
   }
 }

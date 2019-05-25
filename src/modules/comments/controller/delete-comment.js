@@ -3,16 +3,16 @@ import status from "http-status";
 import Comment from "../model/";
 import logger from "../../../config/logger";
 import cache from "../../../config/cache";
+import {
+  ApplicationError,
+  NotFoundError
+} from "../../../helpers/error-classes";
 
-export const deleteComment = async (req, res) => {
+export const deleteComment = async (req, res, next) => {
   try {
     const comment = await Comment.findOne({ where: { id: req.params.id } });
     if (!comment) {
-      return res.status(404).json({
-        error: "not found",
-        message: "comment not found",
-        status: status.NOT_FOUND
-      });
+      return next(new NotFoundError("comment not found"));
     }
     await comment.destroy();
     await cache.del(req.originalUrl);
@@ -20,11 +20,7 @@ export const deleteComment = async (req, res) => {
       .status(200)
       .json({ status: status.OK, message: "resource deleted successfully" });
   } catch (error) {
-    logger.error(error);
-    return res.status(500).json({
-      error: "internal server error",
-      message: error.message,
-      status: status.INTERNAL_SERVER_ERROR
-    });
+    logger.error(error.message);
+    return next(new ApplicationError(error.message));
   }
 };

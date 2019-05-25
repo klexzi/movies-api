@@ -4,8 +4,9 @@ import status from "http-status";
 import logger from "../../../config/logger";
 import Comment from "../model/";
 import cache from "../../../config/cache";
+import { ApplicationError } from "../../../helpers/error-classes";
 
-export const createComment = async (req, res) => {
+export const createComment = async (req, res, next) => {
   try {
     const clientIp = requestIp.getClientIp(req);
     const { comment, mid } = req.body;
@@ -22,11 +23,7 @@ export const createComment = async (req, res) => {
       status: status.OK
     });
   } catch (error) {
-    logger.error(error);
-    return res.status(500).json({
-      error: "internal server error",
-      message: error.message,
-      status: status.INTERNAL_SERVER_ERROR
-    });
+    logger.error(error.message);
+    return next(new ApplicationError(error.message));
   }
 };
