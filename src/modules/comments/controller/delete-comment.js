@@ -18,7 +18,7 @@ export const deleteComment = async (req, res, next) => {
     await cache.del(req.originalUrl);
     return res
       .status(200)
-      .json({ status: status.OK, message: "resource deleted successfully" });
+      .json({ status: status.OK, message: "comment deleted successfully" });
   } catch (error) {
     logger.error(error.message);
     return next(new ApplicationError(error.message));

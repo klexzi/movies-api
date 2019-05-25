@@ -18,7 +18,7 @@ export const createComment = async (req, res, next) => {
     cache.flush();
     return res.status(200).json({
       error: null,
-      message: "comment",
+      message: "comment created successfully",
       result: commentData,
       status: status.OK
     });
