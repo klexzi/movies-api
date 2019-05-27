@@ -5,7 +5,7 @@ import app from "./app";
 import { PORT } from "./config/secrets";
 import logger from "./config/logger";
 import sequelize from "./config/database";
-import Comment from "./modules/comments/model/";
+import { Comment } from "./models";
 
 sequelize
   .authenticate()

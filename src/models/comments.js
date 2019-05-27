@@ -1,7 +1,7 @@
 import { STRING, INTEGER } from "sequelize";
 
-import sequelize from "../../../config/database";
-const Comment = sequelize.define(
+import sequelize from "../config/database";
+export const Comment = sequelize.define(
   "comment",
   {
     id: {
@@ -26,5 +26,3 @@ const Comment = sequelize.define(
   },
   { timestamps: true }
 );
-
-export default Comment;

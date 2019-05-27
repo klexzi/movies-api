@@ -10,5 +10,9 @@
     "ecmaVersion": 9,
     "sourceType": "module"
   },
-  "extends": ["eslint:recommended"]
+  "extends": [
+    "eslint:recommended",
+    "plugin:import/errors",
+    "plugin:import/warnings"
+  ]
 }

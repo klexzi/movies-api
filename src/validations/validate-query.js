@@ -1,5 +1,5 @@
 import Joi from "joi";
-import { ValidationError } from "../../../helpers/error-classes";
+import { ValidationError } from "../helpers/error-classes";
 
 /**
  *

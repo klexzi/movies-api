@@ -12,6 +12,7 @@ class Cache {
   get(key, storeFunction) {
     const value = this.cache.get(key);
     if (value) {
+      // eslint-disable-next-line no-undef
       return Promise.resolve(value);
     }
 

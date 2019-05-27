@@ -7,7 +7,7 @@ import cors from "cors";
 import methodOverride from "method-override";
 
 import { errorHandler } from "./middlewares/error-handler";
-import apiRoutes from "./config/api-routes";
+import apiRoutes from "./routes";
 
 const app = express();
 

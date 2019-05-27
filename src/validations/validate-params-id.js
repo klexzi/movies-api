@@ -7,7 +7,7 @@ import status from "http-status";
  */
 const _validationSchema = params => {
   const schema = {
-    id: Joi.number()
+    movieId: Joi.number()
       .integer()
       .required()
   };

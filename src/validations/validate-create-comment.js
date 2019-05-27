@@ -1,6 +1,6 @@
 import Joi from "joi";
 // import status from "http-status";
-import { ValidationError } from "../../../helpers/error-classes";
+import { ValidationError } from "../helpers/error-classes";
 /**
  *
  * @param {object} body
@@ -9,11 +9,6 @@ const _validationSchema = body => {
   const schema = {
     comment: Joi.string()
       .max(500)
-      .required(),
-    mid: Joi.number()
-      .integer()
-      .min(1)
-      .max(7)
       .required()
   };
   return Joi.validate(body, schema);
