@@ -2,12 +2,14 @@ import status from "http-status";
 
 import { Comment } from "../models";
 import logger from "../config/logger";
-import cache from "../config/cache";
+import Cache from "../config/cache";
 import { ApplicationError } from "../helpers/error-classes";
 
 export const movieComments = async (req, res, next) => {
   try {
-    let comments = await cache.get(req.originalUrl, async () => {
+    let cache = new Cache();
+    let key = req.originalUrl || req.url;
+    let comments = await cache.get(key, async () => {
       const comments = await Comment.findAll({
         order: [["createdAt"]],
         where: { mid: req.params.movieId }

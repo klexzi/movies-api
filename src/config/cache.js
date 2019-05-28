@@ -1,48 +1,42 @@
-import NodeCache from "node-cache";
+import redis from "redis";
+import bluebird from "bluebird";
 
+import logger from "./logger";
+import { REDIS_URL } from "./secrets";
+
+bluebird.promisifyAll(redis.RedisClient.prototype);
+bluebird.promisifyAll(redis.Multi.prototype);
 class Cache {
-  constructor(ttlSeconds) {
-    this.cache = new NodeCache({
-      stdTTL: ttlSeconds,
-      checkperiod: ttlSeconds * 0.2,
-      useClones: false
+  constructor() {
+    this.cache = redis.createClient(REDIS_URL);
+    this.cache.on("connect", () => {
+      logger.debug("Redis connected successfully");
     });
   }
 
-  get(key, storeFunction) {
-    const value = this.cache.get(key);
+  async get(key, fetchFunction) {
+    const value = await this.cache.getAsync(key);
     if (value) {
-      // eslint-disable-next-line no-undef
-      return Promise.resolve(value);
-    }
-
-    return storeFunction().then(result => {
-      this.cache.set(key, result);
-      return result;
-    });
-  }
-
-  del(keys) {
-    this.cache.del(keys);
-  }
-
-  delStartWith(startStr = "") {
-    if (!startStr) {
-      return;
-    }
-
-    const keys = this.cache.keys();
-    for (const key of keys) {
-      if (key.indexOf(startStr) === 0) {
-        this.del(key);
-      }
+      return JSON.parse(value);
+    } else {
+      return fetchFunction().then(result => {
+        this.cache.set(key, JSON.stringify(result));
+        return result;
+      });
     }
   }
 
-  flush() {
-    this.cache.flushAll();
+  async del(keys) {
+    this.cache.delAsync(keys);
+  }
+
+  async set(key, data) {
+    this.cache.setAsync(key, JSON.stringify(data));
+  }
+
+  async flush() {
+    this.cache.flushallAsync();
   }
 }
 
-const cache = new Cache(60 * 60 * 1);
-export default cache;
+export default Cache;

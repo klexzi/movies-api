@@ -77,7 +77,6 @@ const _transformMovieData = async movies => {
 export const getMovies = async () => {
   try {
     let movies = await fetch.get("films");
-    logger.debug("movies", movies);
     return await _transformMovieData(movies.data);
   } catch (error) {
     logger.error(error);
@@ -94,7 +93,6 @@ export const getMovies = async () => {
  */
 export const getMovie = async movieId => {
   try {
-    console.log(movieId);
     let movie = await fetch.get(`films/${movieId}`);
     return movie.data;
   } catch (error) {

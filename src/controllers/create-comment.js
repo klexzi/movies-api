@@ -3,25 +3,32 @@ import status from "http-status";
 
 import logger from "../config/logger";
 import { Comment } from "../models";
-import cache from "../config/cache";
+import Cache from "../config/cache";
 import { ApplicationError, NotFoundError } from "../helpers/error-classes";
 import { getMovie } from "../helpers/movies";
 
 export const createComment = async (req, res, next) => {
   try {
+    let cache = new Cache();
+    let key = req.originalUrl || req.url;
     const clientIp = requestIp.getClientIp(req);
     const { comment } = req.body;
     const { movieId } = req.params;
+    // check if a movie exist with the id passed
     const movie = await getMovie(movieId);
     if (!movie) {
       return next(new NotFoundError("movie not found"));
     }
-    const commentData = await Comment.create({
+    const commentBody = {
       comment,
       ip: clientIp,
       mid: movieId
-    });
-    cache.flush();
+    };
+    const commentData = await Comment.create(commentBody);
+    // remove neccessary keys from cache
+    cache.del(key);
+    // also let movies list get updated data
+    cache.del("/api/movies");
     return res.status(200).json({
       error: null,
       message: "comment created successfully",

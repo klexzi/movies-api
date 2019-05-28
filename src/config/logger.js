@@ -20,8 +20,7 @@ const logger = createLogger({
     })
   ],
   exceptionHandlers: [
-    new transports.File({
-      filename: "exceptions.log",
+    new transports.Console({
       format: combine(
         label({ label: "Log" }),
         timestamp(),

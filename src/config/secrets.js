@@ -11,3 +11,4 @@ export const MYSQL_PASSWORD = process.env.MYSQL_PASSWORD;
 export const MYSQL_DATABASE = process.env.MYSQL_DATABASE;
 
 export const DB_URL = `mysql://${MYSQL_USERNAME}:${MYSQL_PASSWORD}@${MYSQL_HOST}/${MYSQL_DATABASE}?reconnect=true`;
+export const REDIS_URL = process.env.REDIS_URL;
