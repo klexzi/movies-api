@@ -19,7 +19,7 @@ class Cache {
       logger.info("Redis is reconnecting...");
     });
     this.cache.on("error", error => {
-      logger.info(`Redis encountered an error because: ${error}`);
+      logger.error(`Redis encountered an error because: ${error}`);
     });
   }
 
