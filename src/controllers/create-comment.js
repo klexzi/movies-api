@@ -17,6 +17,8 @@ export const createComment = async (req, res, next) => {
     // check if a movie exist with the id passed
     const movie = await getMovie(movieId);
     if (!movie) {
+      // close cache connection
+      cache.close();
       return next(new NotFoundError("movie not found"));
     }
     const commentBody = {
@@ -29,6 +31,8 @@ export const createComment = async (req, res, next) => {
     cache.del(key);
     // also let movies list get updated data
     cache.del("/api/movies");
+    // close cache connection
+    cache.close();
     return res.status(200).json({
       error: null,
       message: "comment created successfully",

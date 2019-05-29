@@ -23,6 +23,8 @@ export const listCharacters = async (req, res, next) => {
         new NotFoundError("no characters found for the movie selected")
       );
     }
+    // close cache connection
+    cache.close();
     return res.status(200).json({ ...characters, status: status.OK });
   } catch (error) {
     logger.error(error.message);

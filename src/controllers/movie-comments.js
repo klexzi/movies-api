@@ -16,6 +16,8 @@ export const movieComments = async (req, res, next) => {
       });
       return comments;
     });
+    // close cache connection
+    cache.close();
     return res
       .status(200)
       .json({ results: comments, status: status.OK, total: comments.length });

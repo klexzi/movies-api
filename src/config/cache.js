@@ -21,6 +21,9 @@ class Cache {
     this.cache.on("error", error => {
       logger.error(`Redis encountered an error because: ${error}`);
     });
+    this.cache.on("end", () => {
+      logger.info("Redis connection ended");
+    });
   }
 
   async get(key, fetchFunction) {
@@ -35,16 +38,19 @@ class Cache {
     }
   }
 
-  async del(keys) {
+  del(keys) {
     this.cache.delAsync(keys);
   }
 
-  async set(key, data) {
+  set(key, data) {
     this.cache.setAsync(key, JSON.stringify(data));
   }
 
-  async flush() {
+  flush() {
     this.cache.flushallAsync();
+  }
+  async close() {
+    this.cache.quit();
   }
 }
 

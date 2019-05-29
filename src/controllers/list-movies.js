@@ -11,6 +11,8 @@ export const listMovies = async (req, res, next) => {
     let movieLists = await cache.get(key, async () => {
       return await getMovies();
     });
+    // close cache connection
+    cache.close();
     return res.status(200).json({ ...movieLists, status: status.OK });
   } catch (error) {
     logger.error(error.message);
