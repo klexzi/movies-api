@@ -25,7 +25,7 @@ export const createComment = async (req, res, next) => {
       mid: movieId
     };
     const commentData = await Comment.create(commentBody);
-    // remove neccessary keys from cache
+    // remove necessary keys from cache
     cache.del(key);
     // also let movies list get updated data
     cache.del("/api/movies");
