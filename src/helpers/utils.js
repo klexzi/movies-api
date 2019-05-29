@@ -1,6 +1,8 @@
 /**
- *
+ * Converts centimeter to feet/inches.
  * @param {number} value
+ * @access public
+ * @return {string}
  */
 export const toFeetAndInches = value => {
   const aFootInCm = 30.48;
@@ -16,7 +18,7 @@ export const toFeetAndInches = value => {
 };
 
 /**
- *
+ * Sorts the data by the arguments specified.
  * @param {array} data
  * @param {string} sortBy
  * @param {string} order
@@ -38,10 +40,12 @@ export const sort = (data, sortBy, order) => {
 };
 
 /**
- *
+ * Filters the data by arguments specified.
  * @param {array} data
  * @param {string} filterBy
  * @param {string} filterValue
+ * @access public
+ * @public
  */
 export const filter = (data, filterBy, filterValue) => {
   return data.filter(result => result[filterBy] === filterValue);

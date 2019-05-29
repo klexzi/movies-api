@@ -4,6 +4,7 @@ import logger from "../config/logger";
 /**
  *
  * @param {number} movieId
+ * @access private
  * @private
  */
 const _countComments = async movieId => {
@@ -13,6 +14,7 @@ const _countComments = async movieId => {
 /**
  *
  * @param {array} movies
+ * @access private
  * @private
  */
 const _sortByReleaseDate = movies => {
@@ -24,6 +26,7 @@ const _sortByReleaseDate = movies => {
 /**
  *
  * @param {array || object} movies
+ * @access private
  * @private
  */
 const _pickFields = movies => {
@@ -48,6 +51,7 @@ const _pickFields = movies => {
 /**
  *
  * @param {array} movies
+ * @access private
  * @private
  */
 const _formatResult = movies => {
@@ -55,8 +59,11 @@ const _formatResult = movies => {
 };
 
 /**
- *
+ * Performs all necessary transformation for movies data.
+ * Transformations like sorting by release date, selecting neccessary fields,
+ * and then formatting the data to the necessary format.
  * @param {array} movies
+ * @access private
  * @public
  */
 const _transformMovieData = async movies => {

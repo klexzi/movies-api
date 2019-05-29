@@ -19,8 +19,9 @@ export class _CustomError extends Error {
 }
 
 /**
+ * for query or body validation errors.
  * @public
- * for query or body validation errors
+ * @access public
  */
 export class ValidationError extends _CustomError {
   constructor(message, error) {

@@ -18,9 +18,26 @@ run
 
     git clone git@github.com:klexzi/movies-api.git
     cd movies-api
-    npm install
-    npm start
+    yarn install
+    yarn start
     
 ## Documentation
 
 Documentation can be found [here](https://documenter.getpostman.com/view/5366815/S1TR5LH7)
+
+## Database
+
+Mysql 8 is the sql database used to persist data for this application.
+Redis is the in-memory database used to cache data for this application, cache are persisted on the redis database.
+
+## Docker
+
+This application as been dockerized including all its depending services.
+
+services include:
+1. mysql
+2. redis
+
+To run image run `docker-compose up --build` and make sure you have docker setup on your machine.
+
+

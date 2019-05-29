@@ -10,7 +10,7 @@ class Cache {
   constructor() {
     this.cache = redis.createClient(REDIS_URL);
     this.cache.on("connect", () => {
-      logger.debug("Redis connected successfully");
+      logger.info("Redis connected successfully");
     });
   }
 

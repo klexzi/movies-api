@@ -20,19 +20,6 @@ const _getCharacter = async link => {
 
 /**
  *
- * @param {array} characters
- */
-export const _getCharacterMeta = characters => {
-  const totalHeightInCm = characters.reduce(
-    (total, character) => total + +character.height,
-    0
-  );
-  const totalHeightInFeet = toFeetAndInches(+totalHeightInCm);
-  const totalCharacters = characters.length;
-  return { totalHeightInCm, totalHeightInFeet, totalCharacters };
-};
-/**
- *
  * @param {array} characterLinks
  * @private
  */
@@ -44,6 +31,23 @@ const _fetchCharacters = characterLinks => {
 
   // eslint-disable-next-line no-undef
   return Promise.all(promises);
+};
+
+/**
+ * returns the characters meta.
+ * it computes the total height of the characters results in
+ * centimeters and feet.
+ * @param {array} characters
+ * @access public
+ */
+export const _getCharacterMeta = characters => {
+  const totalHeightInCm = characters.reduce(
+    (total, character) => total + +character.height,
+    0
+  );
+  const totalHeightInFeet = toFeetAndInches(+totalHeightInCm);
+  const totalCharacters = characters.length;
+  return { totalHeightInCm, totalHeightInFeet, totalCharacters };
 };
 
 /**
