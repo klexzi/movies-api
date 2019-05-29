@@ -10,7 +10,16 @@ class Cache {
   constructor() {
     this.cache = redis.createClient(REDIS_URL);
     this.cache.on("connect", () => {
+      logger.info("Redis is connecting...");
+    });
+    this.cache.on("ready", () => {
       logger.info("Redis connected successfully");
+    });
+    this.cache.on("reconnecting", () => {
+      logger.info("Redis is reconnecting...");
+    });
+    this.cache.on("error", error => {
+      logger.info(`Redis encountered an error because: ${error}`);
     });
   }
 
