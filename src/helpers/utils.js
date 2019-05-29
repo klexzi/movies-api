@@ -1,6 +1,6 @@
 /**
  * Converts centimeter to feet/inches.
- * @param {number} value
+ * @param {number} value the value in centimeters to convert to feet.
  * @access public
  * @return {string}
  */
@@ -19,9 +19,9 @@ export const toFeetAndInches = value => {
 
 /**
  * Sorts the data by the arguments specified.
- * @param {array} data
- * @param {string} sortBy
- * @param {string} order
+ * @param {array} data the array of object data to sort.
+ * @param {string} sortBy specify the object key to sort by.
+ * @param {string} order specify the direction of sorting, either asc for ascending or desc for descending.
  */
 export const sort = (data, sortBy, order) => {
   return data.sort((a, b) => {
@@ -41,9 +41,9 @@ export const sort = (data, sortBy, order) => {
 
 /**
  * Filters the data by arguments specified.
- * @param {array} data
- * @param {string} filterBy
- * @param {string} filterValue
+ * @param {array} data the array of object data to sort.
+ * @param {string} filterBy specify the object key to filter by.
+ * @param {string} filterValue the value to run the filter on.
  * @access public
  * @public
  */

@@ -3,7 +3,7 @@ import { fetch } from "../config/axios";
 import logger from "../config/logger";
 /**
  *
- * @param {number} movieId
+ * @param {number} movieId identifier of the movie.
  * @access private
  * @private
  */
@@ -13,7 +13,7 @@ const _countComments = async movieId => {
 };
 /**
  *
- * @param {array} movies
+ * @param {array} movies array of movies data.
  * @access private
  * @private
  */
@@ -25,7 +25,7 @@ const _sortByReleaseDate = movies => {
 
 /**
  *
- * @param {array || object} movies
+ * @param {array} movies array of movies data.
  * @access private
  * @private
  */
@@ -50,7 +50,7 @@ const _pickFields = movies => {
 
 /**
  *
- * @param {array} movies
+ * @param {array} movies array of movies data.
  * @access private
  * @private
  */
@@ -62,7 +62,7 @@ const _formatResult = movies => {
  * Performs all necessary transformation for movies data.
  * Transformations like sorting by release date, selecting neccessary fields,
  * and then formatting the data to the necessary format.
- * @param {array} movies
+ * @param {array} movies array of movies data.
  * @access private
  * @public
  */

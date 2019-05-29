@@ -3,7 +3,7 @@ import Joi from "@hapi/joi";
 import { ValidationError } from "../helpers/error-classes";
 /**
  * Validates request body for creating comment endpoint.
- * @param {object} body
+ * @param {object} body request body object to validate
  */
 const _validationSchema = body => {
   const schema = {

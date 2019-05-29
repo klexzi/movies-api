@@ -4,6 +4,7 @@ import status from "http-status";
 /**
  *
  * @param {object} params
+ * @access public
  */
 const _validationSchema = params => {
   const schema = {
@@ -14,7 +15,13 @@ const _validationSchema = params => {
 
   return Joi.validate(params, schema);
 };
-
+/**
+ *
+ * @param {*} req request
+ * @param {*} res response
+ * @param {function} next express handler
+ * @access public
+ */
 export const validateParamsId = (req, res, next) => {
   const { error } = _validationSchema(req.params);
   if (error) {

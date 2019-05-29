@@ -6,7 +6,7 @@ import { filter, sort, toFeetAndInches } from "./utils";
 
 /**
  *
- * @param {string} link
+ * @param {string} link the url to get the character resource.
  */
 const _getCharacter = async link => {
   try {
@@ -20,7 +20,7 @@ const _getCharacter = async link => {
 
 /**
  *
- * @param {array} characterLinks
+ * @param {array} characterLinks an array of url links to get the characters.
  * @private
  */
 const _fetchCharacters = characterLinks => {
@@ -37,7 +37,7 @@ const _fetchCharacters = characterLinks => {
  * returns the characters meta.
  * it computes the total height of the characters results in
  * centimeters and feet.
- * @param {array} characters
+ * @param {array} characters an array of characters of a movie.
  * @access public
  */
 export const _getCharacterMeta = characters => {
@@ -52,8 +52,8 @@ export const _getCharacterMeta = characters => {
 
 /**
  * Gets the characters of a movie specified by the movie id.
- * @param {number} movieId
- * @param {object} options
+ * @param {number} movieId the identifier of the movie.
+ * @param {object} options this is an object containing options for filter and sorting.
  * @public
  */
 export const getCharacters = async (movieId, options = {}) => {

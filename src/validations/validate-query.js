@@ -3,7 +3,8 @@ import { ValidationError } from "../helpers/error-classes";
 
 /**
  *
- * @param {object} queryParams
+ * @param {object} queryParams request query parameter body
+ * @access private
  */
 const _validationSchema = queryParams => {
   const schema = {
@@ -21,6 +22,13 @@ const _validationSchema = queryParams => {
   return Joi.validate(queryParams, schema);
 };
 
+/**
+ *
+ * @param {*} req request
+ * @param {*} res response
+ * @param {function} next express handler
+ * @access public
+ */
 export const validateQuery = (req, res, next) => {
   const { error } = _validationSchema(req.query);
   if (error) {

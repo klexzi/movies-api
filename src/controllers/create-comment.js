@@ -29,15 +29,15 @@ export const createComment = async (req, res, next) => {
     const commentData = await Comment.create(commentBody);
     // remove necessary keys from cache
     cache.del(key);
-    // also let movies list get updated data
+    // also let movies list endpoint get updated data by removing it from cache
     cache.del("/api/movies");
     // close cache connection
     cache.close();
-    return res.status(200).json({
+    return res.status(status.CREATED).json({
       error: null,
       message: "comment created successfully",
       result: commentData,
-      status: status.OK
+      status: status.CREATED
     });
   } catch (error) {
     logger.error(error.message);
