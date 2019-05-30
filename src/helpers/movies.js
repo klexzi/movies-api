@@ -1,6 +1,7 @@
 import { Comment } from "../models";
 import { fetch } from "../config/axios";
 import logger from "../config/logger";
+import { FetchError, ApplicationError, NotFoundError } from "./error-classes";
 /**
  *
  * @param {number} movieId identifier of the movie.
@@ -76,10 +77,27 @@ const _transformMovieData = async movies => {
 };
 
 /**
+ * This checks the cause of the error encountered while trying to fetch movies,
+ * and initiates the appropriate error handlers.
+ * @param {object} error error object gotten
+ * @access public
+ * @returns void
+ */
+export const checkFetchMovieError = error => {
+  let isNotFoundError = error.response && error.response.status === 404;
+  // if error was caused by making a request to get movies and movies not found.
+  if (isNotFoundError) {
+    throw new NotFoundError("movie(s) not found");
+  }
+  // if swapi throws error for any other reason except from 404 error
+  else if (error.response) {
+    throw new FetchError(error.data.details);
+  }
+};
+/**
  * Lists all the movies from swapi.
  * It lists all star wars films from swapi.co and performs all transformations.
  * @access public
- * @return {object}
  */
 export const getMovies = async () => {
   try {
@@ -87,7 +105,10 @@ export const getMovies = async () => {
     return await _transformMovieData(movies.data);
   } catch (error) {
     logger.error(error);
-    return { results: [] };
+    // check if error is caused by making request
+    checkFetchMovieError(error);
+    // else error was caused by the application.
+    throw new ApplicationError(error.message);
   }
 };
 
@@ -103,7 +124,9 @@ export const getMovie = async movieId => {
     let movie = await fetch.get(`films/${movieId}`);
     return movie.data;
   } catch (error) {
-    logger.error(error);
-    return null;
+    // check if error is caused by making request
+    checkFetchMovieError(error);
+    // else error was caused by the application.
+    throw new ApplicationError(error.message);
   }
 };

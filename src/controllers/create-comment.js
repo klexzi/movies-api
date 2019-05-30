@@ -4,8 +4,8 @@ import status from "http-status";
 import logger from "../config/logger";
 import { Comment } from "../models";
 import Cache from "../config/cache";
-import { ApplicationError, NotFoundError } from "../helpers/error-classes";
 import { getMovie } from "../helpers/movies";
+import { returnErrorType } from "../helpers/utils";
 
 export const createComment = async (req, res, next) => {
   try {
@@ -16,11 +16,6 @@ export const createComment = async (req, res, next) => {
     const { movieId } = req.params;
     // check if a movie exist with the id passed
     const movie = await getMovie(movieId);
-    if (!movie) {
-      // close cache connection
-      cache.close();
-      return next(new NotFoundError("movie not found"));
-    }
     const commentBody = {
       comment,
       ip: clientIp,
@@ -41,6 +36,6 @@ export const createComment = async (req, res, next) => {
     });
   } catch (error) {
     logger.error(error.message);
-    return next(new ApplicationError(error.message));
+    return returnErrorType(error, next);
   }
 };

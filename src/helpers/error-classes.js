@@ -4,7 +4,7 @@ import statusCode from "http-status";
  * @private
  * extending default javascript error class
  */
-export class _CustomError extends Error {
+class _CustomError extends Error {
   constructor(message, error, status) {
     super();
 
@@ -47,6 +47,15 @@ export class NotFoundError extends _CustomError {
   }
 }
 
+export class FetchError extends _CustomError {
+  constructor(message, error) {
+    super(
+      message || "cant fetch resource",
+      error || "service unavailable",
+      statusCode.SERVICE_UNAVAILABLE
+    );
+  }
+}
 /**
  * @public
  * for Application errors

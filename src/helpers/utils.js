@@ -1,3 +1,5 @@
+import { NotFoundError, FetchError, ApplicationError } from "./error-classes";
+
 /**
  * Converts centimeter to feet/inches.
  * @param {number} value the value in centimeters to convert to feet.
@@ -49,4 +51,14 @@ export const sort = (data, sortBy, order) => {
  */
 export const filter = (data, filterBy, filterValue) => {
   return data.filter(result => result[filterBy] === filterValue);
+};
+
+export const returnErrorType = (error, next) => {
+  if (error instanceof NotFoundError) {
+    return next(new NotFoundError(error.message));
+  }
+  if (error instanceof FetchError) {
+    return next(new FetchError(error.message));
+  }
+  return next(new ApplicationError(error.message));
 };

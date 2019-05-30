@@ -21,3 +21,11 @@ sequelize
   .catch(reason => {
     logger.info("could not connect to db because " + reason.message);
   });
+
+/**
+ * listen to unhandled promise rejection.
+ */
+process.on("unhandledRejection", reason => {
+  logger.error("Unhandled Rejection at", reason.stack || reason);
+  // can send the information to a crash reporting service like sentry.io here.
+});

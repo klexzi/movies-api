@@ -6,8 +6,13 @@ import { REDIS_URL } from "./secrets";
 
 bluebird.promisifyAll(redis.RedisClient.prototype);
 bluebird.promisifyAll(redis.Multi.prototype);
+
+/**
+ * @param {number} ttl time for cache to expire in seconds, default is 3600 seconds.
+ */
 class Cache {
-  constructor() {
+  constructor(ttl = 60) {
+    this.ttl = ttl;
     this.cache = redis.createClient(REDIS_URL);
     this.cache.on("connect", () => {
       logger.info("Redis is connecting...");
@@ -32,7 +37,7 @@ class Cache {
       return JSON.parse(value);
     } else {
       return fetchFunction().then(result => {
-        this.cache.set(key, JSON.stringify(result));
+        this.cache.set(key, JSON.stringify(result), "EX", this.ttl);
         return result;
       });
     }

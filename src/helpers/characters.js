@@ -3,19 +3,15 @@ import axios from "axios";
 import { fetch } from "../config/axios";
 import logger from "../config/logger";
 import { filter, sort, toFeetAndInches } from "./utils";
+import { NotFoundError, ApplicationError, FetchError } from "./error-classes";
 
 /**
  *
  * @param {string} link the url to get the character resource.
  */
 const _getCharacter = async link => {
-  try {
-    const character = await axios.get(link);
-    return character.data;
-  } catch (error) {
-    logger.debug(error.message);
-    return null;
-  }
+  const character = await axios.get(link);
+  return character.data;
 };
 
 /**
@@ -70,7 +66,25 @@ export const getCharacters = async (movieId, options = {}) => {
     }
     return { characters, meta: _getCharacterMeta(characters) };
   } catch (error) {
-    logger.debug(error.message);
-    return null;
+    logger.error(error);
+    let isNotFoundError =
+      error.response && error.response.status === 404 && error.response.request;
+    // if error was caused by making a request to get movie and movie not found.
+    if (isNotFoundError && error.response.request.path.includes("films")) {
+      throw new NotFoundError("movie not found");
+    } // if there was an error while getting the characters
+    else if (
+      isNotFoundError &&
+      error.response.request.path.includes("people")
+    ) {
+      throw new NotFoundError(
+        "can not get characters for this movie at the moment, pls try again later."
+      );
+    } // if swapi throws error for any other reason except from 404 error
+    else if (error.response) {
+      throw new FetchError(error.data.details);
+    }
+    // then error was caused from the application.
+    throw new ApplicationError(error.message);
   }
 };

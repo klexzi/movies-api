@@ -2,7 +2,11 @@ import status from "http-status";
 
 import logger from "../config/logger";
 import Cache from "../config/cache";
-import { ApplicationError, NotFoundError } from "../helpers/error-classes";
+import {
+  ApplicationError,
+  NotFoundError,
+  FetchError
+} from "../helpers/error-classes";
 import { getCharacters } from "../helpers/characters";
 export const listCharacters = async (req, res, next) => {
   try {
@@ -18,16 +22,17 @@ export const listCharacters = async (req, res, next) => {
       return await getCharacters(req.params.movieId, options);
     });
 
-    if (!characters) {
-      return next(
-        new NotFoundError("no characters found for the movie selected")
-      );
-    }
     // close cache connection
     cache.close();
     return res.status(200).json({ ...characters, status: status.OK });
   } catch (error) {
     logger.error(error.message);
+    if (error instanceof NotFoundError) {
+      return next(new NotFoundError(error.message));
+    }
+    if (error instanceof FetchError) {
+      return next(new FetchError(error.message));
+    }
     return next(new ApplicationError(error.message));
   }
 };
