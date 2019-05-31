@@ -37,10 +37,10 @@ const _fetchCharacters = characterLinks => {
  * @access public
  */
 export const _getCharacterMeta = characters => {
-  const totalHeightInCm = characters.reduce(
-    (total, character) => total + +character.height,
-    0
-  );
+  const totalHeightInCm = characters.reduce((total, character) => {
+    if (isNaN(+character.height)) return total;
+    return total + +character.height;
+  }, 0);
   const totalHeightInFeet = toFeetAndInches(+totalHeightInCm);
   const totalCharacters = characters.length;
   return { totalHeightInCm, totalHeightInFeet, totalCharacters };
