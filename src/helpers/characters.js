@@ -66,7 +66,7 @@ export const getCharacters = async (movieId, options = {}) => {
     }
     return { characters, meta: _getCharacterMeta(characters) };
   } catch (error) {
-    logger.error(error);
+    console.log(error);
     let isNotFoundError =
       error.response && error.response.status === 404 && error.response.request;
     // if error was caused by making a request to get movie and movie not found.
@@ -81,8 +81,8 @@ export const getCharacters = async (movieId, options = {}) => {
         "can not get characters for this movie at the moment, pls try again later."
       );
     } // if swapi throws error for any other reason except from 404 error
-    else if (error.response) {
-      throw new FetchError(error.data.details);
+    else if (error.request || error.code === "ENOTFOUND") {
+      throw new FetchError("service not available");
     }
     // then error was caused from the application.
     throw new ApplicationError(error.message);

@@ -90,7 +90,7 @@ export const checkFetchMovieError = error => {
     throw new NotFoundError("movie(s) not found");
   }
   // if swapi throws error for any other reason except from 404 error
-  else if (error.response) {
+  else if (error.request || error.code === "ENOTFOUND") {
     throw new FetchError(error.data.details);
   }
 };
