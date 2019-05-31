@@ -66,7 +66,7 @@ export const getCharacters = async (movieId, options = {}) => {
     }
     return { characters, meta: _getCharacterMeta(characters) };
   } catch (error) {
-    console.log(error);
+    logger.error(error);
     let isNotFoundError =
       error.response && error.response.status === 404 && error.response.request;
     // if error was caused by making a request to get movie and movie not found.
