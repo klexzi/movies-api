@@ -15,7 +15,7 @@ export const createComment = async (req, res, next) => {
     const { comment } = req.body;
     const { movieId } = req.params;
     // check if a movie exist with the id passed
-    const movie = await getMovie(movieId);
+    await getMovie(movieId);
     const commentBody = {
       comment,
       ip: clientIp,

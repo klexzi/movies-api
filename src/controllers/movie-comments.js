@@ -3,7 +3,7 @@ import status from "http-status";
 import { Comment } from "../models";
 import logger from "../config/logger";
 import Cache from "../config/cache";
-import { ApplicationError } from "../helpers/error-classes";
+import { returnErrorType } from "../helpers/utils";
 
 export const movieComments = async (req, res, next) => {
   try {
@@ -23,6 +23,6 @@ export const movieComments = async (req, res, next) => {
       .json({ results: comments, status: status.OK, total: comments.length });
   } catch (error) {
     logger.error(error.message);
-    return next(new ApplicationError(error.message));
+    return returnErrorType(error, next);
   }
 };

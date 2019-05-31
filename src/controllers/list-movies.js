@@ -16,6 +16,6 @@ export const listMovies = async (req, res, next) => {
     return res.status(200).json({ ...movieLists, status: status.OK });
   } catch (error) {
     logger.error(error.message);
-    return returnErrorType();
+    return returnErrorType(error, next);
   }
 };
