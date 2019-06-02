@@ -8,6 +8,7 @@ export const clearCache = async (req, res, next) => {
   try {
     let cache = new Cache();
     await cache.flush();
+    cache.close();
     return res.status(200).json({
       error: null,
       message: "cache flushed successfully",
